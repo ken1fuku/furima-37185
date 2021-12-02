@@ -76,29 +76,39 @@ RSpec.describe User, type: :model do
         expect(@user.errors.full_messages).to include('Email is invalid')
       end
       it 'last_nameが全角日本語でない場合登録できない' do
-        @user.email = 'test'
+        @user.last_name = 'test'
         @user.valid?
-        expect(@user.errors.full_messages).to include('Email is invalid')
+        expect(@user.errors.full_messages).to include('Last name is invalid')
       end
       it 'first_nameが全角日本語でない場合登録できない' do
-        @user.email = 'test'
+        @user.first_name = 'test'
         @user.valid?
-        expect(@user.errors.full_messages).to include('Email is invalid')
+        expect(@user.errors.full_messages).to include('First name is invalid')
       end
       it 'last_name_kanaが全角カタカナでない場合登録できない' do
-        @user.email = 'てすと'
+        @user.last_name_kana = 'てすと'
         @user.valid?
-        expect(@user.errors.full_messages).to include('Email is invalid')
+        expect(@user.errors.full_messages).to include('Last name kana is invalid')
       end
       it 'first_name_kanaが全角カタカナでない場合登録できない' do
-        @user.email = 'てすと'
+        @user.first_name_kana = 'てすと'
         @user.valid?
-        expect(@user.errors.full_messages).to include('Email is invalid')
+        expect(@user.errors.full_messages).to include('First name kana is invalid')
       end
-      it 'passwordが英数字混合でない場合登録できない' do
-        @user.email = 'testpass'
+      it 'passwordが英字のみの場合登録できない' do
+        @user.password = 'testpass'
         @user.valid?
-        expect(@user.errors.full_messages).to include('Email is invalid')
+        expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
+      end
+      it 'passwordが数字のみの場合登録できない' do
+        @user.password = '123456'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
+      end
+      it 'passwordが全角の場合登録できない' do
+        @user.password = 'TEST1234'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
       end
     end
   end
