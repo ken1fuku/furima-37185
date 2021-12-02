@@ -75,6 +75,31 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include('Email is invalid')
       end
+      it 'last_nameが全角日本語でない場合登録できない' do
+        @user.email = 'test'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Email is invalid')
+      end
+      it 'first_nameが全角日本語でない場合登録できない' do
+        @user.email = 'test'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Email is invalid')
+      end
+      it 'last_name_kanaが全角カタカナでない場合登録できない' do
+        @user.email = 'てすと'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Email is invalid')
+      end
+      it 'first_name_kanaが全角カタカナでない場合登録できない' do
+        @user.email = 'てすと'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Email is invalid')
+      end
+      it 'passwordが英数字混合でない場合登録できない' do
+        @user.email = 'testpass'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Email is invalid')
+      end
     end
   end
 end
