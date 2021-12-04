@@ -30,12 +30,12 @@ RSpec.describe Item, type: :model do
       it 'priceが¥300~¥9,999,999ではない場合は登録できない' do
         @item.price = '200'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price is out of range")
+        expect(@item.errors.full_messages).to include('Price is out of range')
       end
       it 'priceが半角数値ではない場合は登録できない' do
         @item.price = '３００'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price is out of range")
+        expect(@item.errors.full_messages).to include('Price is out of range')
       end
       it 'imageが空では登録できない' do
         @item.image = nil
