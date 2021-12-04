@@ -27,8 +27,13 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("Price can't be blank")
       end
-      it 'priceが¥300~¥9,999,999ではない場合は登録できない' do
+      it 'priceが299以下の場合は保存できない' do
         @item.price = '200'
+        @item.valid?
+        expect(@item.errors.full_messages).to include('Price is out of range')
+      end
+      it 'priceが10,000,000以上の場合は保存できない' do
+        @item.price = '10000000'
         @item.valid?
         expect(@item.errors.full_messages).to include('Price is out of range')
       end
@@ -66,6 +71,11 @@ RSpec.describe Item, type: :model do
         @item.day_id = '1'
         @item.valid?
         expect(@item.errors.full_messages).to include("Day can't be blank")
+      end
+      it 'ユーザー情報がない場合は登録できない' do
+        @item.user = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include("User must exist")
       end
     end
   end
