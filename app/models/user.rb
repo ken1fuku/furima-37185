@@ -13,5 +13,5 @@ class User < ApplicationRecord
   validates :password, presence: true, format: { with: /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i }
 
   has_many :items
-  #  has_many :shoppings
+  has_many :shoppings
 end
